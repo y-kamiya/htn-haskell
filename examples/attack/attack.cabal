@@ -1,0 +1,21 @@
+name:                attack
+version:             0.1.0.0
+synopsis:            example using htn library
+description:         Please see README.md
+homepage:            https://github.com/y-kamiya/htn/examples/attack
+license:             BSD3
+license-file:        LICENSE
+author:              Yuji Kamiya
+maintainer:          y.kamiya0@gmail.com
+copyright:           2016 Yuji Kamiya
+category:            Sample
+build-type:          Simple
+cabal-version:       >=1.10
+
+executable attack
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.6 && < 5
+                     , htn
+                     , containers
