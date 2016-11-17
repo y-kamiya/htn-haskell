@@ -10,7 +10,7 @@ class (Eq a, Ord a, Show a) => CompoundTask a
 data Task a b = Primitive a
               | Compound b
               | Invalid String
-              deriving Show
+              deriving (Eq, Ord, Show)
 
 data Domain a b c = Domain {
                       primitiveMap :: M.Map a [([c], [c])]
