@@ -13,8 +13,8 @@ data Task a b = Primitive a
               deriving (Eq, Ord, Show)
 
 data Domain a b c = Domain {
-                      primitiveMap :: M.Map a [([c], [c])]
-                    , compoundMap :: M.Map b [([c], [Task a b])]
+                      primitiveMap :: M.Map a [([c], [c])] -- ^ map of PrimitiveTask to conditions, value means pre-condtions and post-condtions
+                    , compoundMap :: M.Map b [([c], [Task a b])] -- ^ map of compoundTask to conditions, value means pre-conditions and separated tasks
                     }
 
 instance (Show a, Show b, Show c) => Show (Domain a b c) where
@@ -34,6 +34,7 @@ htn' domain condition (task@(Compound cTask):tasks) plan = let newTasks = breakd
 include :: (Ord a) => [a] -> [a] -> Bool
 include cond1 cond2 = null $ cond2 \\ cond1
 
+-- | separate compound task to smaller one
 breakdown :: (PrimitiveTask a, CompoundTask b, Term c) => Domain a b c -> [c] -> b -> [Task a b]
 breakdown domain condition task = case M.lookup task (compoundMap domain) of
                                      Nothing -> [Invalid $ "definition is not found for " ++ show task]
@@ -41,6 +42,7 @@ breakdown domain condition task = case M.lookup task (compoundMap domain) of
                                                     Just (_, tasks) -> tasks
                                                     Nothing -> [Invalid $ "no condition is matched, current: " ++ show condition ++ ", task: " ++ show task]
 
+-- | execute primitive task and update current condtion
 execute :: (PrimitiveTask a, Term c) => Domain a b c -> [c] -> a -> [c]
 execute domain condition task = case M.lookup task (primitiveMap domain) of
                                   Nothing -> []
