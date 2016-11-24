@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/y-kamiya/htn-haskell.svg?branch=master)](https://travis-ci.org/y-kamiya/htn-haskell)
+
 # HTN
 HTN is a kind of automated planning algorithm.   
 
